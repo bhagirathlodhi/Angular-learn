@@ -17,8 +17,34 @@ export class SignUpComponent {
 
   })
 
-  onUserSave(){
-    const formValue = this.userForm.value;
-    debugger;
+  onUserSave(): void {
+    if (this.userForm.valid) {
+      const formValue = this.userForm.value;
+
+      // password check
+      if (formValue.uPassword !== formValue.uRePassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      // Simulated JSON DB using localStorage
+      const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+
+      // Check if email already exists
+      const userExists = existingUsers.some((user: any) => user.eMail === formValue.eMail);
+      if (userExists) {
+        alert("Email already registered.");
+        return;
+      }
+
+      // Save new user
+      existingUsers.push(formValue);
+      localStorage.setItem('users', JSON.stringify(existingUsers));
+
+      alert("User registered successfully!");
+      this.userForm.reset();
+    } else {
+      alert("Please fill all required fields correctly.");
+    }
   }
 }
