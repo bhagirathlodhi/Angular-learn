@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -9,6 +10,8 @@ import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angula
   styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
+
+  constructor(private router: Router) {}
 
  loginForm = new FormGroup({
     eMail: new FormControl('', [Validators.required, Validators.email]),
@@ -25,7 +28,7 @@ export class SignInComponent {
 
     if (foundUser) {
       alert("Login successful!");
-      // Navigate or do something
+      this.router.navigate(['/'])
     } else {
       alert("Invalid email or password.");
     }
